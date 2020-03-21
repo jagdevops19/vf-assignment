@@ -1,0 +1,3 @@
+INSERT INTO APP_TIMESTAMP (date_timeStamp)
+VALUES
+('19/03/2020')
