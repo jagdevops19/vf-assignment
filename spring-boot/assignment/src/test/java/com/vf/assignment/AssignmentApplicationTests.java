@@ -23,7 +23,7 @@ public class AssignmentApplicationTests {
 	@Autowired
 	private TestRestTemplate restTemplate;
 	@LocalServerPort
-	private int port=9090;
+	private int port=5000;
 	
 	private String getRootUrl() {
 		return "http://localhost:" + port;
@@ -32,7 +32,7 @@ public class AssignmentApplicationTests {
 	public void testGetAllTimeStamps() {
 		HttpHeaders headers = new HttpHeaders();
 		HttpEntity<String> entity = new HttpEntity<String>(null, headers);
-		ResponseEntity<String> response = restTemplate.exchange(getRootUrl() + "/getALLTimeStamps",
+		ResponseEntity<String> response = restTemplate.exchange(getRootUrl() + "/app/getALLTimeStamps",
 		HttpMethod.GET, entity, String.class);
 		Assert.isNull(response.getBody());
 	}

@@ -23,11 +23,12 @@ public class AppTimeStampController {
 	@Autowired
 	private AppTimeStampService atsService;
 
+	//http://localhost:5000/app/getAllTimeStamps
 	@GetMapping(path = "/app/getAllTimeStamps", produces = "application/json")
 	public List<AppTimeStamp> findAll() {
 		return atsService.findAll();
 	}
-
+	//http://localhost:5000/app/getTimeStamp/{1}
 	@RequestMapping(value = "/app/getTimeStamp/{id}", produces = "application/json", method = RequestMethod.GET)
 	public ResponseEntity<Optional<AppTimeStamp>> findById(@PathVariable long id) {
 		try {
@@ -36,16 +37,17 @@ public class AppTimeStampController {
 			return new ResponseEntity<Optional<AppTimeStamp>>(atsService.findById(id), HttpStatus.BAD_REQUEST);
 		}
 	}
-
+	//http://localhost:5000/app
 	@RequestMapping(value = "/app", method = { RequestMethod.POST })
 	public AppTimeStamp createAppTimeStamp() {
 		return atsService.save(new AppTimeStamp());
 	}
 	
+	//http://localhost:5000/app/delTimeStamp/{1}
 	@RequestMapping(value = "/app/delTimeStamp/{id}", method = { RequestMethod.DELETE })
 	public void deleteAppTimeStamp(@PathVariable long id) {
 		atsService.deleteById(id);
 	}
-	// TODO - PUT
+	// TODO - PUT and Error Handling
 
 }
