@@ -1,0 +1,86 @@
+pipeline {
+    agent {
+        label '!windows'
+        //define Maven repo
+        //define artifacts repo
+        //define docker hub
+        //define git hub
+    }
+    environment {
+       // this assumes that "cred1" has been created on Jenkins Credentials
+       // GIT_LOGIN = credentials("git")
+        BUILD_NUM_ENV = "${BUILD_NUMBER}"
+    }
+    triggers {
+    //cron('@daily')
+    }
+    options {
+        //disableConcurrentBuilds()
+        //skipDefaultCheckout(true)
+        timeout(time: 5, unit: 'MINUTES')
+        retry(3)
+        //timestamps()
+    }
+    tools {
+        jdk 'jdk1.8.0_241'
+        maven 'maven3.6.2'
+    }
+    stages {
+        stage('Deploy'){
+             steps {
+                timeout(time: 5, unit: "SECONDS") {
+                    retry(3) {
+                      dir('spring-boot/assignment/target'){  
+                         // bat 'cp assignment-0.0.1-SNAPSHOT.jar to the server'
+                        //echo "Deploy the jar to the server"
+                      }
+                    }
+                }
+                
+             }
+        }
+        stage('Restart the application'){
+             steps {
+                echo "Restart the application"
+             }
+        }
+        stage('Health check'){
+             steps {
+                timeout(time: 30, unit: "SECONDS") {
+                    //./healthcheck.sh
+                    echo "All GOOD"
+                }
+             }
+        }
+        stage('Run Automated tests'){
+             steps {
+                //echo "Run the tests"
+             }
+        }
+    }
+    post {
+        always {
+           // archive "target/**/*"
+            echo 'This will always run'
+            echo 'BUILD_NUM_ENV is "${currentBuild.getNumber()}"'
+            echo '${BUILD_NUMBER}'
+            echo '$BUILD_NUM_ENV'
+        }
+        success {
+            echo 'Success - send a slack notification'
+            echo 'pipeline ${currentBuild.fullDisplayName} completed'
+        }
+        failure {
+            echo 'Failed - send email to relevant team'
+            echo 'pipeline ${currentBuild.fullDisplayName} failed'
+        }
+        unstable {
+            echo 'Unstable - Send email to relevant team'
+        }
+        changed {
+            echo 'This will run only if the state of the Pipeline has changed'
+            echo 'For example, if the Pipeline was previously failing but is now successful'
+        }
+    }
+    
+}

@@ -1,0 +1,69 @@
+pipeline {
+    agent any
+    parameters {
+        choice choices: ['create\ndestroy'], description: 'What do you want to do?', name: 'CREATE_OR_DELETE'
+        choice choices: ['dev\ntest\nprod'], description: 'Environment', name: 'BUILD_ENV'
+    }
+    tools {
+        jdk 'jdk1.8.0_241'
+        maven 'maven3.6.2'
+        terraform 'terraform_0.12.21_windows_amd64'
+    }
+    stages{
+        stage("checkout"){
+            steps {
+                echo "In git checkout"
+                git credentialsId: 'git', url: 'https://github.com/jyothi-kasturi/vf-assignment'
+            }
+        }
+        stage("Terraform Plan"){
+            steps {
+                dir("terraform/dev") {
+                    bat 'terraform init'
+                    bat 'terraform plan -out=plan.out'
+                }
+            }
+        }
+        stage("Plan Approval") {
+            steps {
+                input id: 'Approve', message: 'Approve', ok: 'Approve'
+            }
+        }
+        stage ("Create/Destroy Infrastructure") {
+            steps {
+                dir ("terraform/dev"){
+                    script{
+                            if(params.CREATE_OR_DELETE == 'create'){
+                                bat 'terraform apply plan.out'
+                            } else {
+                                    if(params.CREATE_OR_DELETE == 'destroy'){
+                                        bat 'terraform destroy -auto-approve'
+                                    } else {
+                                    echo "Not a valid option" 
+                                    }   
+                                }
+                        }
+                }
+            }
+        }
+    }
+    post {
+            always {
+            echo 'This will always run'
+            }
+            success {
+                echo 'Success - send a slack notification'
+            }
+            failure {
+                echo 'Failed - send email to relevant team'
+            }
+            unstable {
+                echo 'Unstable - Send email to relevant team'
+            }
+            changed {
+                echo 'This will run only if the state of the Pipeline has changed'
+                echo 'For example, if the Pipeline was previously failing but is now successful'
+            }
+        }
+    
+}

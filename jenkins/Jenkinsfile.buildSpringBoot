@@ -1,0 +1,73 @@
+pipeline {
+    agent any
+    environment {
+       // this assumes that "cred1" has been created on Jenkins Credentials
+       // GIT_LOGIN = credentials("git")
+        BUILD_ENV = "${params.BUILD_ENV}"
+    }
+    //triggers {cron('@daily')}
+    options {
+        //disableConcurrentBuilds()
+        //skipDefaultCheckout(true)
+        timeout(time: 5, unit: 'MINUTES')
+        retry(3) 
+        //timestamps()
+    }
+    parameters {
+        choice choices: ['dev\ntest\nprod'], description: 'Environment', name: 'BUILD_ENV'
+    }
+    tools {
+        jdk 'jdk1.8.0_241'
+        maven 'maven3.6.2'
+    }
+    stages {
+        stage('checkout'){
+             steps {
+                git credentialsId: 'git', url: 'https://github.com/jyothi-kasturi/vf-assignment'
+             }
+        }
+        stage('Build') {
+            steps {
+                dir('spring-boot/assignment/'){
+                   echo "Profile selected is - ${params.BUILD_ENV}"
+                   script{
+                        if(params.BUILD_ENV == 'dev'){
+                            bat 'mvn clean install -Pdev -DskipTests=true' 
+                        } else {
+                                if(params.BUILD_ENV == 'test'){
+                                    bat 'mvn clean install -Ptest -DskipTests=true'
+                                } else {
+                                    if(params.BUILD_ENV == 'prod'){
+                                        bat 'mvn clean install -Pprod -DskipTests=true' 
+                                    } else {
+                                        bat 'mvn clean install -DskipTests' 
+                                    }
+                            }   
+                        }
+                    }
+                }
+                
+            }
+        }
+    }
+    post {
+        always {
+           // archive "target/**/*"
+            echo 'This will always run'
+        }
+        success {
+            echo 'Success - send a slack notification'
+        }
+        failure {
+            echo 'Failed - send email to relevant team'
+        }
+        unstable {
+            echo 'Unstable - Send email to relevant team'
+        }
+        changed {
+            echo 'This will run only if the state of the Pipeline has changed'
+            echo 'For example, if the Pipeline was previously failing but is now successful'
+        }
+    }
+    
+}
