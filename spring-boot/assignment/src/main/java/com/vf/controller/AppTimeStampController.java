@@ -14,8 +14,9 @@ import com.vf.entities.AppTimeStamp;
 import com.vf.services.AppTimeStampService;
 
 /**
- * Rest Controller for POST API to insert timestamp in to DB
- * This class has GET, POST, PUT, DELETE API methods
+ * Rest Controller for POST API to insert timestamp in to DB.
+ * This class has GET,
+ * POST, PUT, DELETE API methods
  */
 @RestController
 public class AppTimeStampController {
@@ -23,13 +24,14 @@ public class AppTimeStampController {
 	@Autowired
 	private AppTimeStampService atsService;
 
-	//http://localhost:5000/app/getAllTimeStamps
-	@GetMapping(path = "/app/getAllTimeStamps", produces = "application/json")
+	// GET /timeStamps
+	@GetMapping(path = "/timeStamps", produces = "application/json")
 	public List<AppTimeStamp> findAll() {
 		return atsService.findAll();
 	}
-	//http://localhost:5000/app/getTimeStamp/{1}
-	@RequestMapping(value = "/app/getTimeStamp/{id}", produces = "application/json", method = RequestMethod.GET)
+
+	// GET /timeStamps/{1}
+	@RequestMapping(value = "/timeStamps/{id}", produces = "application/json", method = RequestMethod.GET)
 	public ResponseEntity<Optional<AppTimeStamp>> findById(@PathVariable long id) {
 		try {
 			return new ResponseEntity<Optional<AppTimeStamp>>(atsService.findById(id), HttpStatus.OK);
@@ -37,14 +39,21 @@ public class AppTimeStampController {
 			return new ResponseEntity<Optional<AppTimeStamp>>(atsService.findById(id), HttpStatus.BAD_REQUEST);
 		}
 	}
-	//http://localhost:5000/app
-	@RequestMapping(value = "/app", method = { RequestMethod.POST })
+
+	// POST /timeStamps
+	@RequestMapping(value = "/timeStamps", method = { RequestMethod.POST })
 	public AppTimeStamp createAppTimeStamp() {
 		return atsService.save(new AppTimeStamp());
 	}
-	
-	//http://localhost:5000/app/delTimeStamp/{1}
-	@RequestMapping(value = "/app/delTimeStamp/{id}", method = { RequestMethod.DELETE })
+
+	// POST /app
+	@RequestMapping(value = "/app", method = { RequestMethod.POST })
+	public AppTimeStamp addAppTimeStamp() {
+		return atsService.save(new AppTimeStamp());
+	}
+
+	// DELTE /timeStamps/{1}
+	@RequestMapping(value = "/timeStamps/{id}", method = { RequestMethod.DELETE })
 	public void deleteAppTimeStamp(@PathVariable long id) {
 		atsService.deleteById(id);
 	}
