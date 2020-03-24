@@ -25,7 +25,7 @@ On Windows, install below software
     POST - http://localhost:5000/timeStamps
 
     DELETE - http://localhost:5000/timeStamps{1}
-    
+
     PUT - TODO
 
 2. Terraform (Infrastructure As Code) 
@@ -33,8 +33,11 @@ On Windows, install below software
     https://github.com/jyothi-kasturi/vf-assignment/terraform
 
     cd dev
+
     terraform init
+    
     terraform plan
+    
     terraform apply
  
 3. Jenkins Pipelines
