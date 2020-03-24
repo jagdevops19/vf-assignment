@@ -20,11 +20,11 @@ On Windows, install below software
 
     GET - http://localhost:5000/timeStamps
 
-    GET - http://localhost:5000/timeStamps{1}
+    GET - http://localhost:5000/timeStamps/1
 
     POST - http://localhost:5000/timeStamps
 
-    DELETE - http://localhost:5000/timeStamps{1}
+    DELETE - http://localhost:5000/timeStamps/1
 
     
 2. Terraform (Infrastructure As Code) 
