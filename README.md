@@ -26,8 +26,7 @@ On Windows, install below software
 
     DELETE - http://localhost:5000/timeStamps{1}
 
-    PUT - TODO
-
+    
 2. Terraform (Infrastructure As Code) 
 
     https://github.com/jyothi-kasturi/vf-assignment/terraform
