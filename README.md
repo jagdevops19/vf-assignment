@@ -7,7 +7,8 @@ On Windows, install below software
 4. Jenkins 
 5. Ansible - use to configure any software installations
 6. PostgreSQL - only if you need to test on local machine
-7. AWS - Elasticbeanstalk
+7. AWS CLI - to configure the credentials
+8. AWS - Elasticbeanstalk
 
 # Usage
 
@@ -40,6 +41,13 @@ On Windows, install below software
     2. Jenkinsfile.createOrDestroyInfra - This will call terraform scripts to create or destroy infrastructure in AWS
     3. Jenkinsfile deploySpringBoot - Create a Jenkins freestyle job with Jenkins Plugin AWS ElasticBeanstalk.
         TODO - Deploy pipeline code
+
+4. AWS 
+    Edit the below file on local machine <username>/.aws/credentials
+    [dev]
+    aws_access_key_id=
+    aws_secret_access_key=
+
 
 # Configure Deployment Environments 
 
