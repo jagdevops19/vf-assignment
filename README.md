@@ -10,12 +10,16 @@ On Windows, install below software
 7. AWS CLI - to configure the credentials
 8. AWS - Elasticbeanstalk
 
+# Design documentation
+ 
+  https://github.com/jyothi-kasturi/vf-assignment/documentation/Architecture.pdf
+
 # Usage [* Only dev environment will work end to end, please select dev from jenkins jobs]
 
 
 1. How to run it with Jenkins Pipelines ?
 
-    Please access https://github.com/jyothi-kasturi/vf-assignment/documentation/How_to_run_Jenkins_pipeline_jobs.pdf
+    Access https://github.com/jyothi-kasturi/vf-assignment/documentation/How_to_run_Jenkins_pipeline_jobs.pdf
 
     and setup the jenkins jobs as described in that documentation. 
 
