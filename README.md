@@ -37,7 +37,7 @@ On Windows, install below software
     terraform init
     
     terraform plan
-    
+
     terraform apply
  
 3. Jenkins Pipelines
@@ -55,6 +55,11 @@ On Windows, install below software
     aws_access_key_id=
     aws_secret_access_key=
 
+
+5 AWS Costs
+
+    Use free tier where possible
+    Here, NAT gateways incur costs so please destory the infrastructure once done or comment that code in vpc.tf
 
 # Configure Deployment Environments 
 
