@@ -1,8 +1,8 @@
 pipeline {
     agent any
     parameters {
-        choice choices: ['create\ndestroy'], description: 'What do you want to do?', name: 'CREATE_OR_DELETE'
-        choice choices: ['dev\ntest\nprod'], description: 'Environment', name: 'BUILD_ENV'
+        choice choices: ['create','destroy'], description: 'What do you want to do?', name: 'CREATE_OR_DELETE'
+        choice choices: ['dev','test','prod'], description: 'Environment', name: 'BUILD_ENV'
     }
     tools {
         jdk 'jdk1.8.0_241'
