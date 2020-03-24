@@ -18,10 +18,14 @@ On Windows, install below software
 
     On Local machine
 
-    GET - http://<ip>:5000/timeStamps\n
-    GET - http://<ip>:5000/timeStamps{1}\n
-    POST - http://<ip>:5000/timeStamps\n
-    DELETE - http://<ip>:5000/timeStamps{1}\n
+    GET - http://localhost:5000/timeStamps
+
+    GET - http://localhost:5000/timeStamps{1}
+
+    POST - http://localhost:5000/timeStamps
+
+    DELETE - http://localhost:5000/timeStamps{1}
+    
     PUT - TODO
 
 2. Terraform (Infrastructure As Code) 
