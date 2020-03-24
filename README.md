@@ -1,12 +1,12 @@
 # Assignment
-#Install Software
-Java 1.8.0_241
-Spring-boot-2.2.5
-Maven - 3.6.2
-Terraform_0.12.21_windows_amd64
-Jenkins
-Ansible
-PostgreSQL
+On Windows, install below software
+
+1. Java 1.8.0_241, Spring-boot-2.2.5
+2. Maven - 3.6.2
+3. Terraform_0.12.21_windows_amd64
+4. Jenkins
+5. Ansible 
+6. PostgreSQL - only if you need to test on local machine
 
 # Usage
 
